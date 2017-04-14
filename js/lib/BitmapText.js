@@ -43,7 +43,7 @@ this.createjs = this.createjs || {};
 function BitmapText(text, spriteSheet) {
 	this.initialize(text, spriteSheet);
 }
-var p = BitmapText.prototype = new createjs.DisplayObject();
+let p = BitmapText.prototype = new createjs.DisplayObject();
 
 // static properties:
 
@@ -123,7 +123,7 @@ var p = BitmapText.prototype = new createjs.DisplayObject();
 	 * @method initialize
 	 * @protected
 	 **/
-	p.initialize = function (text, spriteSheet) {
+	p.initialize = (text, spriteSheet) => {
 		this.DisplayObject_initialize();
 
 		this.text = text;
@@ -148,17 +148,17 @@ var p = BitmapText.prototype = new createjs.DisplayObject();
 	 * For example, used for drawing the cache (to prevent it from simply drawing an existing cache back
 	 * into itself).
 	 **/
-	p.draw = function(ctx, ignoreCache) {
+	p.draw = (ctx, ignoreCache) => {
 		if (this.DisplayObject_draw(ctx, ignoreCache)) { return true; }
 		
-		var w, h, x=0, y=0, spaceW=this.spaceWidth, lineH=this.lineHeight, ss=this.spriteSheet;
+		let w, h, x=0, y=0, spaceW=this.spaceWidth, lineH=this.lineHeight, ss=this.spriteSheet;
 		
-		var hasSpace = !!this._getFrame(" ", ss);
+		let hasSpace = !!this._getFrame(" ", ss);
 		if (!hasSpace && spaceW==0) { spaceW = this._getSpaceWidth(ss); }
 		if (lineH==0) { lineH = this._getLineHeight(ss); }
 		
-		for(var i=0, l=this.text.length; i<l; i++) {
-			var char = this.text.charAt(i);
+		for(let i=0, l=this.text.length; i<l; i++) {
+			let char = this.text.charAt(i);
 			if (!hasSpace && char == " ") {
 				x += spaceW;
 				continue;
@@ -169,9 +169,9 @@ var p = BitmapText.prototype = new createjs.DisplayObject();
 				continue;
 			}
 
-			var o = this._getFrame(char, ss);
+			let o = this._getFrame(char, ss);
 			if (!o) { continue; }
-			var rect = o.rect;
+			let rect = o.rect;
 			
 			ctx.drawImage(o.image, rect.x, rect.y, w=rect.width, h=rect.height, x-o.regX, y-o.regY, w, h);
 			
@@ -186,8 +186,8 @@ var p = BitmapText.prototype = new createjs.DisplayObject();
 	 * @method isVisible
 	 * @return {Boolean} Boolean indicating whether the display object would be visible if drawn to a canvas
 	 **/
-	p.isVisible = function() {
-		var hasContent = this.cacheCanvas || (this.spriteSheet && this.spriteSheet.complete && this.text);
+	p.isVisible = () => {
+		let hasContent = this.cacheCanvas || (this.spriteSheet && this.spriteSheet.complete && this.text);
 		return !!(this.visible && this.alpha > 0 && this.scaleX != 0 && this.scaleY != 0 && hasContent);
 	}
 
@@ -197,8 +197,8 @@ var p = BitmapText.prototype = new createjs.DisplayObject();
 	 * @type Function
 	 * @private
 	 **/
-	p._getFrame = function(char, spriteSheet) {
-		var o = spriteSheet.getAnimation(char) ||
+	p._getFrame = (char, spriteSheet) => {
+		let o = spriteSheet.getAnimation(char) ||
 				spriteSheet.getAnimation(char.toUpperCase()) ||
 				spriteSheet.getAnimation(char.toLowerCase());
 		return o ? spriteSheet.getFrame(o.frames[0]) : null;
@@ -209,8 +209,8 @@ var p = BitmapText.prototype = new createjs.DisplayObject();
 	 * @type Function
 	 * @private
 	 **/
-	p._getLineHeight = function(ss) {
-		var frame = this._getFrame("1",ss) || this._getFrame("T",ss) || this._getFrame("L",ss) || ss.getFrame(0);
+	p._getLineHeight = (ss) => {
+		let frame = this._getFrame("1",ss) || this._getFrame("T",ss) || this._getFrame("L",ss) || ss.getFrame(0);
 		return frame ? frame.rect.height : 1;
 	}
 	
@@ -219,8 +219,8 @@ var p = BitmapText.prototype = new createjs.DisplayObject();
 	 * @type Function
 	 * @private
 	 **/
-	p._getSpaceWidth = function(ss) {
-		var frame = this._getFrame("1",ss) || this._getFrame("E",ss) || this._getFrame("A",ss) || ss.getFrame(0);
+	p._getSpaceWidth = (ss) => {
+		let frame = this._getFrame("1",ss) || this._getFrame("E",ss) || this._getFrame("A",ss) || ss.getFrame(0);
 		return frame ? frame.rect.width : 1;
 	}
 
