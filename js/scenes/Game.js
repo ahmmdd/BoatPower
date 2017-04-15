@@ -6,7 +6,7 @@
         this.initialize();
     }
 
-    let p = Game.prototype = new createjs.Container();
+    var p = Game.prototype = new createjs.Container();
 
     p.Container_initialize = p.initialize;
 
@@ -45,7 +45,7 @@
     p.upKeyDown = false;
     p.downKeyDown = false;
 
-    p.initialize = () => {
+    p.initialize = function () {
         this.Container_initialize();
         this.setProperties();
         this.buildStarField();
@@ -54,7 +54,7 @@
         this.setControls();
         createjs.Sound.play(game.assets.SOUNDTRACK);
     }
-    p.setProperties = () => {
+    p.setProperties = function () {
         this.heroBulletPool = [];
         this.heroBullets = [];
         this.enemyPool = [];
@@ -66,9 +66,9 @@
         this.betweenLevels = false;
         this.enemyLastSpawnTime = 0;
     }
-    p.buildStarField = () => {
-        let star;
-        let numStars = 20;
+    p.buildStarField = function () {
+        var star;
+        var numStars = 20;
         for (i = 0; i < numStars; i++) {
             star = new createjs.Sprite(spritesheet, 'star3');
             star.speed = Utils.getRandomNumber(100, 200);
@@ -78,7 +78,7 @@
             this.stars.push(star);
         }
     }
-    p.buildSprites = () => {
+    p.buildSprites = function () {
         this.heroShip = new game.HeroShip();
         this.heroShip.on(this.heroShip.EXPLOSION_COMPLETE, this.checkGame, this);
         this.heroShip.x = screen_width / 2;
@@ -92,18 +92,18 @@
         this.lifeBox = new game.LifeBox(this.numLives);
         this.addChild(this.heroShip, this.healthMeter, this.scoreboard, this.lifeBox);
     }
-    p.setWalls = () => {
+    p.setWalls = function () {
         this.leftWall = this.heroShip.getBounds().width / 2;
         this.rightWall = screen_width - this.heroShip.getBounds().width / 2;
         this.floor = screen_height - this.heroShip.getBounds().height;
         this.ceiling = screen_height - (this.heroShip.getBounds().height * 3);
     }
-    p.setControls = () => {
+    p.setControls = function () {
         document.onkeydown = this.handleKeyDown.bind(this);
         document.onkeyup = this.handleKeyUp.bind(this);
 
     }
-    p.handleKeyDown = (e) => {
+    p.handleKeyDown = function (e) {
         e = !e ? window.event : e;
         switch (e.keyCode) {
             case ARROW_KEY_LEFT:
@@ -120,7 +120,7 @@
                 break;
         }
     }
-    p.handleKeyUp = (e) => {
+    p.handleKeyUp = function (e) {
         e = !e ? window.event : e;
         switch (e.keyCode) {
             case ARROW_KEY_LEFT:
@@ -145,9 +145,9 @@
      * UPDATE FUNCTIONS
      *
      */
-    p.updateStars = () => {
-        let i, star, velY, speed, nextY;
-        let len = this.stars.length;
+    p.updateStars = function () {
+        var i, star, velY, speed, nextY;
+        var len = this.stars.length;
         for (i = 0; i < len; i++) {
             star = this.stars[i];
             velY = star.speed * this.delta / 1000;
@@ -158,10 +158,10 @@
             star.nextY = nextY;
         }
     }
-    p.updateHeroShip = () => {
-        let velocity = this.heroShip.speed * this.delta / 1000;
-        let nextX = this.heroShip.x;
-        let nextY = this.heroShip.y;
+    p.updateHeroShip = function () {
+        var velocity = this.heroShip.speed * this.delta / 1000;
+        var nextX = this.heroShip.x;
+        var nextY = this.heroShip.y;
         if (this.leftKeyDown) {
             nextX -= velocity;
             if (nextX < this.leftWall) {
@@ -189,9 +189,9 @@
         this.heroShip.nextX = nextX;
         this.heroShip.nextY = nextY;
     }
-    p.updateEnemies = () => {
-        let enemy, i, velY;
-        let len = this.enemies.length - 1;
+    p.updateEnemies = function () {
+        var enemy, i, velY;
+        var len = this.enemies.length - 1;
         for (i = len; i >= 0; i--) {
             enemy = this.enemies[i];
             velY = enemy.speed * this.delta / 1000;
@@ -204,9 +204,9 @@
             }
         }
     }
-    p.updateHeroBullets = () => {
-        let bullet, i, velY;
-        let len = this.heroBullets.length - 1;
+    p.updateHeroBullets = function () {
+        var bullet, i, velY;
+        var len = this.heroBullets.length - 1;
         for (i = len; i >= 0; i--) {
             bullet = this.heroBullets[i];
             velY = bullet.speed * this.delta / 1000;
@@ -218,9 +218,9 @@
             }
         }
     }
-    p.updateEnemyBullets = () => {
-        let bullet, i, velY;
-        let len = this.enemyBullets.length - 1;
+    p.updateEnemyBullets = function () {
+        var bullet, i, velY;
+        var len = this.enemyBullets.length - 1;
         for (i = len; i >= 0; i--) {
             bullet = this.enemyBullets[i];
             velY = bullet.speed * this.delta / 1000;
@@ -237,20 +237,20 @@
      * RENDER FUNCTIONS
      *
      */
-    p.renderStars = () => {
-        let i, star;
+    p.renderStars = function () {
+        var i, star;
         for (i = 0; i < this.stars.length; i++) {
             star = this.stars[i];
             star.y = star.nextY;
         }
     }
-    p.renderHeroShip = () => {
+    p.renderHeroShip = function () {
         this.heroShip.x = this.heroShip.nextX;
         this.heroShip.y = this.heroShip.nextY;
     }
-    p.renderHeroBullets = () => {
-        let bullet, i;
-        let len = this.heroBullets.length - 1;
+    p.renderHeroBullets = function () {
+        var bullet, i;
+        var len = this.heroBullets.length - 1;
         for (i = len; i >= 0; i--) {
             bullet = this.heroBullets[i];
             if (bullet.shouldDie) {
@@ -264,9 +264,9 @@
             }
         }
     }
-    p.renderEnemyBullets = () => {
-        let bullet, i;
-        let len = this.enemyBullets.length - 1;
+    p.renderEnemyBullets = function () {
+        var bullet, i;
+        var len = this.enemyBullets.length - 1;
         for (i = len; i >= 0; i--) {
             bullet = this.enemyBullets[i];
             if (bullet.shouldDie) {
@@ -280,9 +280,9 @@
             }
         }
     }
-    p.renderEnemies = () => {
-        let enemy, i;
-        let len = this.enemies.length - 1;
+    p.renderEnemies = function () {
+        var enemy, i;
+        var len = this.enemies.length - 1;
         for (i = len; i >= 0; i--) {
             enemy = this.enemies[i];
             if (enemy.shouldDie) {
@@ -303,15 +303,15 @@
      * CHECK FUNCTIONS
      *
      */
-    p.checkForEnemySpawn = (time) => {
+    p.checkForEnemySpawn = function (time) {
         if (time - this.enemyLastSpawnTime > this.enemySpawnWaiter) {
             this.spawnEnemyShip();
             this.enemyLastSpawnTime = time;
         }
     }
-    p.checkForEnemyFire = (time) => {
-        let enemy, i;
-        let len = this.enemies.length - 1;
+    p.checkForEnemyFire = function (time) {
+        var enemy, i;
+        var len = this.enemies.length - 1;
         for (i = len; i >= 0; i--) {
             enemy = this.enemies[i];
             if (time - enemy.lastFired > enemy.fireDelay) {
@@ -320,8 +320,8 @@
             }
         }
     }
-    p.checkHeroBullets = () => {
-        let i, b, bullet, enemy, collision;
+    p.checkHeroBullets = function () {
+        var i, b, bullet, enemy, collision;
         for (i in this.enemies) {
             enemy = this.enemies[i];
             for (b in this.heroBullets) {
@@ -334,8 +334,8 @@
             }
         }
     }
-    p.checkEnemyBullets = () => {
-        let b, bullet, collision;
+    p.checkEnemyBullets = function () {
+        var b, bullet, collision;
         for (b in this.enemyBullets) {
             bullet = this.enemyBullets[b];
             collision = ndgmr.checkPixelCollision(this.heroShip, bullet);
@@ -346,9 +346,9 @@
             }
         }
     }
-    p.checkShips = () => {
-        let enemy, i;
-        let len = this.enemies.length - 1;
+    p.checkShips = function () {
+        var enemy, i;
+        var len = this.enemies.length - 1;
         for (i = len; i >= 0; i--) {
             enemy = this.enemies[i];
             if (enemy.y > screen_height / 2) {
@@ -363,12 +363,12 @@
             }
         }
     }
-    p.checkHealth = (e) => {
+    p.checkHealth = function (e) {
         if (this.healthMeter.empty) {
             this.heroShip.shouldDie = true;
         }
     }
-    p.checkHero = () => {
+    p.checkHero = function () {
         if (this.heroShip.shouldDie) {
             this.numLives--;
             this.heroShip.explode();
@@ -376,13 +376,14 @@
             this.betweenLevels = true;
         }
     }
-    p.checkGame = (e) => {
+    p.checkGame = function (e) {
         if (this.numLives > 0) {
             this.heroShip.reset();
             this.heroShip.makeInvincible(true);
             this.healthMeter.reset();
             this.betweenLevels = false;
-        } else {
+        }
+        else {
             game.score = this.scoreboard.getScore();
             this.dispose();
             this.dispatchEvent(game.GameStateEvents.GAME_OVER);
@@ -393,30 +394,30 @@
      * SPAWN FUNCTION
      *
      */
-    p.spawnEnemyShip = () => {
-        let enemy = this.enemyPool.getSprite();
+    p.spawnEnemyShip = function () {
+        var enemy = this.enemyPool.getSprite();
         enemy.y = -enemy.getBounds().height;
         enemy.x = Utils.getRandomNumber(enemy.getBounds().width, screen_width - enemy.getBounds().width);
         this.addChild(enemy);
         this.enemies.push(enemy);
     }
-    p.spawnEnemyBullet = (enemy) => {
-        let bullet = this.enemyBulletPool.getSprite();
+    p.spawnEnemyBullet = function (enemy) {
+        var bullet = this.enemyBulletPool.getSprite();
         bullet.currentAnimationFrame = 1;
         bullet.y = enemy.y;
         bullet.x = enemy.x;
         this.addChildAt(bullet, 0);
         this.enemyBullets.push(bullet);
     }
-    p.spawnHeroBullet = () => {
-        let bullet = this.heroBulletPool.getSprite();
+    p.spawnHeroBullet = function () {
+        var bullet = this.heroBulletPool.getSprite();
         bullet.x = this.heroShip.x;
         bullet.y = this.heroShip.y - this.heroShip.getBounds().height / 2;
         this.addChildAt(bullet, 0);
         this.heroBullets.push(bullet)
     }
-    p.spawnEnemyExplosion = (x, y) => {
-        let explosion = this.explosionPool.getSprite();
+    p.spawnEnemyExplosion = function (x, y) {
+        var explosion = this.explosionPool.getSprite();
         explosion.x = x - 45;
         explosion.y = y - 30;
         this.addChild(explosion);
@@ -424,8 +425,8 @@
         explosion.play();
         createjs.Sound.play(game.assets.EXPLOSION);
     }
-    p.explosionComplete = (e) => {
-        let explosion = e.target;
+    p.explosionComplete = function (e) {
+        var explosion = e.target;
         this.removeChild(explosion);
         this.explosionPool.returnSprite(explosion);
     }
@@ -435,21 +436,21 @@
      * GAME LOOP
      *
      */
-    p.update = () => {
+    p.update = function () {
         this.updateStars();
         this.updateHeroShip()
         this.updateEnemies();
         this.updateHeroBullets();
         this.updateEnemyBullets();
     }
-    p.render = () => {
+    p.render = function () {
         this.renderStars();
         this.renderHeroShip();
         this.renderEnemies();
         this.renderHeroBullets();
         this.renderEnemyBullets();
     }
-    p.run = (tickEvent) => {
+    p.run = function (tickEvent) {
         this.delta = tickEvent.delta;
         if (!this.betweenLevels) {
             this.update();
@@ -465,7 +466,7 @@
             this.checkHero();
         }
     }
-    p.dispose = () => {
+    p.dispose = function () {
         document.onkeydown = null;
         document.onkeyup = null;
     }
