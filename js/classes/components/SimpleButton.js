@@ -1,25 +1,12 @@
-/**
- *  
- *  
- *  Source File Name:   SimpleButton.js
- *  Author Name(s):     Mohammed Ahmed
- *                      Joshua Korovesi
- *                      Tyler Acosta
- *                      Justin Muere
- *  Last Modified by:   Mohammed Juned Ahmed
- *  Date Last Modified: April 14, 2017
- *  Revision History:   1.0.0
- * 
- */
-(function() {
+(function () {
 
     window.ui = window.ui || {};
 
-    let SimpleButton =  (label) => {
+    var SimpleButton = function (label) {
         this.label = label;
         this.initialize();
     }
-    let p = SimpleButton.prototype = new createjs.Container();
+    var p = SimpleButton.prototype = new createjs.Container();
 
     // SimpleButton properties
     p.label;
@@ -35,7 +22,7 @@
 
     p.Container_initialize = p.initialize;
 
-    p.initialize = () => {
+    p.initialize = function () {
         this.Container_initialize();
         this.drawButton();
         this.setButtonListeners();
@@ -53,7 +40,7 @@
         this.background.graphics.beginStroke(this.borderColor).beginFill(this.buttonColor).drawRect(0,0,this.width,this.height);
         this.addChild(this.background,this.labelTxt);
     }
-    p.setButtonListeners = () =>{
+    p.setButtonListeners = function (){
         this.cursor = 'pointer';
         this.on('rollover',this.onButtonOver);
         this.on('rollout',this.onButtonOut);

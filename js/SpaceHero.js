@@ -1,16 +1,3 @@
-/**
- *  
- *  
- *  Source File Name:   SpaceHero.js
- *  Author Name(s):     Mohammed Ahmed
- *                      Joshua Korovesi
- *                      Tyler Acosta
- *                      Justin Muere
- *  Last Modified by:   Mohammed Juned Ahmed
- *  Date Last Modified: April 14, 2017
- *  Revision History:   1.0.0
- * 
- */
 (function (window) {
 
     window.game = window.game || {}
@@ -19,7 +6,7 @@
         this.initialize();
     }
 
-    let p = SpaceHero.prototype;
+    var p = SpaceHero.prototype;
 
     p.preloader;
 
@@ -27,7 +14,7 @@
     p.currentScene;
 
 
-    p.initialize = () => {
+    p.initialize = function () {
         // set globals
         canvas = document.getElementById('canvas');
         stage = new createjs.Stage(canvas);
@@ -39,7 +26,7 @@
         game.assets = new game.AssetManager();
         this.preloadAssets()
     }
-    p.preloadAssets = () => {
+    p.preloadAssets = function () {
         this.preloader = new ui.Preloader('#d2354c', '#FFF');
         this.preloader.x = (canvas.width / 2) - (this.preloader.width / 2);
         this.preloader.y = (canvas.height / 2) - (this.preloader.height / 2);
@@ -48,26 +35,26 @@
         game.assets.on(game.assets.ASSETS_COMPLETE, this.assetsReady, this);
         game.assets.preloadAssets();
     }
-    p.onAssetsProgress = () => {
+    p.onAssetsProgress = function () {
         this.preloader.update(game.assets.loadProgress);
         stage.update();
     }
-    p.assetsReady = () => {
+    p.assetsReady = function () {
         stage.removeChild(this.preloader);
         stage.update();
         this.createSpriteSheet();
         this.gameReady();
     }
-    p.createSpriteSheet = () => {
-        let assets = game.assets;
+    p.createSpriteSheet = function () {
+        var assets = game.assets;
         spritesheet = new createjs.SpriteSheet(assets.getAsset(assets.GAME_SPRITES_DATA));
     }
-    p.gameReady = () => {
+    p.gameReady = function () {
         createjs.Ticker.setFPS(60);
         createjs.Ticker.on("tick", this.onTick, this);
         this.changeState(game.GameStates.MAIN_MENU);
     }
-    p.changeState = (state) => {
+    p.changeState = function (state) {
         switch (state) {
             case game.GameStates.MAIN_MENU:
                 this.currentGameStateFunction = this.gameStateMainMenu;
@@ -83,10 +70,10 @@
                 break;
         }
     }
-    p.onStateEvent = (e, obj) => {
+    p.onStateEvent = function (e, obj) {
         this.changeState(obj.state);
     }
-    p.disposeCurrentScene = () => {
+    p.disposeCurrentScene = function () {
         if (this.currentScene != null) {
             stage.removeChild(this.currentScene);
             if(this.currentScene.dispose){
@@ -95,24 +82,24 @@
             this.currentScene = null;
         }
     }
-    p.gameStateMainMenu = (tickEvent) => {
-        let scene = new game.GameMenu();
+    p.gameStateMainMenu = function (tickEvent) {
+        var scene = new game.GameMenu();
         scene.on(game.GameStateEvents.GAME, this.onStateEvent, this, true, {state:game.GameStates.GAME});
         stage.addChild(scene);
         this.disposeCurrentScene();
         this.currentScene = scene;
         this.changeState(game.GameStates.RUN_SCENE);
     }
-    p.gameStateGame = (tickEvent) => {
-        let scene = new game.Game();
+    p.gameStateGame = function (tickEvent) {
+        var scene = new game.Game();
         scene.on(game.GameStateEvents.GAME_OVER, this.onStateEvent, this, true, {state:game.GameStates.GAME_OVER});
         stage.addChild(scene);
         this.disposeCurrentScene()
         this.currentScene = scene;
         this.changeState(game.GameStates.RUN_SCENE);
     }
-    p.gameStateGameOver = (tickEvent) => {
-        let scene = new game.GameOver();
+    p.gameStateGameOver = function (tickEvent) {
+        var scene = new game.GameOver();
         stage.addChild(scene);
         scene.on(game.GameStateEvents.MAIN_MENU, this.onStateEvent, this, true, {state:game.GameStates.MAIN_MENU});
         scene.on(game.GameStateEvents.GAME, this.onStateEvent, this, true, {state:game.GameStates.GAME});
@@ -120,12 +107,12 @@
         this.currentScene = scene;
         this.changeState(game.GameStates.RUN_SCENE);
     }
-    p.gameStateRunScene = (tickEvent) => {
+    p.gameStateRunScene = function (tickEvent) {
         if (this.currentScene.run) {
             this.currentScene.run(tickEvent);
         }
     }
-    p.onTick = (e) => {
+    p.onTick = function (e) {
         if (this.currentGameStateFunction != null) {
             this.currentGameStateFunction(e);
         }

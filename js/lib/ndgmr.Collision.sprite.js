@@ -32,26 +32,26 @@ this.ndgmr = this.ndgmr || {};
 
 (function() {
 
-  let collisionCanvas = document.createElement('canvas');
-  let collisionCtx = collisionCanvas.getContext('2d');
+  var collisionCanvas = document.createElement('canvas');
+  var collisionCtx = collisionCanvas.getContext('2d');
       //collisionCtx.globalCompositeOperation = 'source-in';
       collisionCtx.save();
 
-  let collisionCanvas2 = document.createElement('canvas');
-  let collisionCtx2 = collisionCanvas2.getContext('2d');
+  var collisionCanvas2 = document.createElement('canvas');
+  var collisionCtx2 = collisionCanvas2.getContext('2d');
       collisionCtx2.save();
 
-  let cachedBAFrames = [];
+  var cachedBAFrames = [];
 
-  let checkRectCollision = (bitmap1,bitmap2) => {
-    let b1, b2;
+  var checkRectCollision = function(bitmap1,bitmap2) {
+    var b1, b2;
     b1 = getBounds(bitmap1);
     b2 = getBounds(bitmap2);
     return calculateIntersection(b1,b2);
   }
   ndgmr.checkRectCollision = checkRectCollision;
 
-  let checkPixelCollision = (bitmap1, bitmap2, alphaThreshold, getRect) => {
+  var checkPixelCollision = function(bitmap1, bitmap2, alphaThreshold, getRect) {
     //display the intersecting canvases for debugging
     if ( ndgmr.DEBUG || ndgmr.DEBUG_COLLISION ) {
       document.body.appendChild(collisionCanvas);
@@ -60,7 +60,7 @@ this.ndgmr = this.ndgmr || {};
 
     getRect = getRect || false;
 
-    let areObjectsCloseEnough,
+    var areObjectsCloseEnough,
         intersetion,
         imageData1, imageData2,
         pixelIntersection;
@@ -104,8 +104,8 @@ this.ndgmr = this.ndgmr || {};
   }
   ndgmr.checkPixelCollision = checkPixelCollision;
 
-  let _collisionDistancePrecheck = (bitmap1,bitmap2) => {
-    let ir1,ir2,b1,b2;
+  var _collisionDistancePrecheck = function(bitmap1,bitmap2) {
+    var ir1,ir2,b1,b2;
 
     b1 = bitmap1.localToGlobal(0,0);
     b2 = bitmap2.localToGlobal(0,0);
@@ -122,8 +122,8 @@ this.ndgmr = this.ndgmr || {};
           && Math.abs(b2.y-b1.y) < ir2.height*bitmap2.scaleY+ir1.height*bitmap2.scaleY )
   }
 
-  let _intersectingImagePart = (intersetion,bitmap,ctx,i) => {
-    let bl, image, frameName, sr;
+  var _intersectingImagePart = function(intersetion,bitmap,ctx,i) {
+    var bl, image, frameName, sr;
 
     if ( bitmap instanceof createjs.Bitmap ) {
       image = bitmap.image;
@@ -154,8 +154,8 @@ this.ndgmr = this.ndgmr || {};
     return ctx.getImageData(0, 0, intersetion.width, intersetion.height).data;
   }
 
-  let _compareAlphaValues = (imageData1,imageData2,width,height,alphaThreshold,getRect) => {
-    let alpha1, alpha2, x, y, offset = 3,
+  var _compareAlphaValues = function(imageData1,imageData2,width,height,alphaThreshold,getRect) {
+    var alpha1, alpha2, x, y, offset = 3,
         pixelRect = {x:Infinity,y:Infinity,x2:-Infinity,y2:-Infinity};
 
     // parsing through the pixels checking for an alpha match
@@ -191,11 +191,11 @@ this.ndgmr = this.ndgmr || {};
   // this is needed to paint the intersection part correctly,
   // if the tested bitmap is a child to a rotated/scaled parent
   // this was not painted correctly before
-  let _getParentalCumulatedProperty = (child,propName,operation) => {
+  var _getParentalCumulatedProperty = function(child,propName,operation) {
     operation = operation || '+';
     if ( child.parent && child.parent[propName] ) {
-      let cp = child[propName];
-      let pp = _getParentalCumulatedProperty(child.parent,propName,operation);
+      var cp = child[propName];
+      var pp = _getParentalCumulatedProperty(child.parent,propName,operation);
       if ( operation == '*' ) {
         return cp * pp;
       } else {
@@ -206,11 +206,12 @@ this.ndgmr = this.ndgmr || {};
     return child[propName];
   }
 
-  let calculateIntersection = (rect1, rect2) => {
+  var calculateIntersection = function(rect1, rect2)
+  {
     // first we have to calculate the
     // center of each rectangle and half of
     // width and height
-    let dx, dy, r1={}, r2={};
+    var dx, dy, r1={}, r2={};
     r1.cx = rect1.x + (r1.hw = (rect1.width /2));
     r1.cy = rect1.y + (r1.hh = (rect1.height/2));
     r2.cx = rect2.x + (r2.hw = (rect2.width /2));
@@ -234,12 +235,12 @@ this.ndgmr = this.ndgmr || {};
   }
   ndgmr.calculateIntersection = calculateIntersection;
 
-  let getBounds = function(obj) {
-    let bounds={x:Infinity,y:Infinity,width:0,height:0};
+  var getBounds = function(obj) {
+    var bounds={x:Infinity,y:Infinity,width:0,height:0};
     if ( obj instanceof createjs.Container ) {
       bounds.x2 = -Infinity;
       bounds.y2 = -Infinity;
-      let children = obj.children, l=children.length, cbounds, c;
+      var children = obj.children, l=children.length, cbounds, c;
       for ( c = 0; c < l; c++ ) {
         cbounds = getBounds(children[c]);
         if ( cbounds.x < bounds.x ) bounds.x = cbounds.x;
@@ -259,7 +260,7 @@ this.ndgmr = this.ndgmr || {};
       delete bounds.x2;
       delete bounds.y2;
     } else {
-      let gp,gp2,gp3,gp4,imgr={},sr;
+      var gp,gp2,gp3,gp4,imgr={},sr;
       if ( obj instanceof createjs.Bitmap ) {
         sr = obj.sourceRect || obj.image;
 
@@ -267,7 +268,7 @@ this.ndgmr = this.ndgmr || {};
         imgr.height = sr.height;
       } else if ( obj instanceof createjs.Sprite ) {
         if ( obj.spriteSheet._frames && obj.spriteSheet._frames[obj.currentFrame] && obj.spriteSheet._frames[obj.currentFrame].image ) {
-          let cframe = obj.spriteSheet.getFrame(obj.currentFrame);
+          var cframe = obj.spriteSheet.getFrame(obj.currentFrame);
           imgr.width =  cframe.rect.width;
           imgr.height =  cframe.rect.height;
           imgr.regX = cframe.regX;
