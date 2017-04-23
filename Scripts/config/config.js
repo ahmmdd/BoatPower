@@ -1,3 +1,18 @@
+/**
+ *  This is the game.ts file that calls all the scene files for the
+ *  game
+ *
+ *  Source File Name:   config.ts
+ *  Author Name(s):     Mohammed Ahmed
+ *                      Joshua Korovesi
+ *                      Tyler Acosta
+ *                      Justin Muere
+ *  Last Modified by:   Mohammed Juned Ahmed
+ *  Date Last Modified: April 19, 2017
+ *  Revision History:   1.0.0
+ *
+ * @module config
+ */
 var config;
 (function (config) {
     // Scene Constants
@@ -8,6 +23,8 @@ var config;
         Scene.INSTRUCTION = 1;
         Scene.PLAY = 2;
         Scene.END = 3;
+        Scene.PLAY2 = 4;
+        Scene.PLAY3 = 5;
         return Scene;
     }());
     config.Scene = Scene;

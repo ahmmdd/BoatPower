@@ -1,3 +1,17 @@
+/**
+ *  This is the game.ts file that calls all the scene files for the
+ *  game
+ *
+ *  Source File Name:   game.ts
+ *  Author Name(s):     Mohammed Ahmed
+ *                      Joshua Korovesi
+ *                      Tyler Acosta
+ *                      Justin Muere
+ *  Last Modified by:   Mohammed Juned Ahmed
+ *  Date Last Modified: April 19, 2017
+ *  Revision History:   1.0.0
+ *
+ */
 /// <reference path = "_reference.ts" />
 // global variables
 var assets;
@@ -13,6 +27,8 @@ var highScoreValue = 0;
 var menu;
 var instruction;
 var play;
+var play2;
+var play3;
 var end;
 var assetData = [
     // Add your Assets here
@@ -20,7 +36,7 @@ var assetData = [
     { id: "BackButton", src: "../../Assets/images/back.png" },
     { id: "InstructionButton", src: "../../Assets/images/instructions.png" },
     { id: "ExitButton", src: "../../Assets/images/exit.png" },
-    { id: "forest", src: "../../Assets/images/ocean.gif" },
+    { id: "ocean", src: "../../Assets/images/ocean.gif" },
     { id: "plane", src: "../../Assets/images/player.png" },
     { id: "enemy1", src: "../../Assets/images/enemy1.png" },
     { id: "blackBox", src: "../../Assets/images/blackBox.png" },
@@ -84,10 +100,10 @@ function changeScene() {
             console.log("Starting MENU Scene");
             break;
         case config.Scene.INSTRUCTION:
-            // show the MENU scene
+            // show the Intructions scene
             stage.removeAllChildren();
             instruction = new scenes.Instruction();
-            currentScene = menu;
+            currentScene = instruction;
             console.log("Starting Instruction Scene");
             break;
         case config.Scene.PLAY:
@@ -103,6 +119,20 @@ function changeScene() {
             end = new scenes.End();
             currentScene = end;
             console.log("Starting END Scene");
+            break;
+        case config.Scene.PLAY2:
+            // show the play level 2 scene
+            stage.removeAllChildren();
+            play2 = new scenes.Play2();
+            currentScene = play2;
+            console.log("Starting PLAY2 Scene");
+            break;
+        case config.Scene.PLAY3:
+            // show the play level 3 scene
+            stage.removeAllChildren();
+            play3 = new scenes.Play3();
+            currentScene = play3;
+            console.log("Starting PLAY3 Scene");
             break;
     }
     console.log(currentScene.numChildren);

@@ -1,3 +1,17 @@
+/**
+ *  The managers module sets up the score board
+ *
+ *  Source File Name:   scoreboard.ts
+ *  Author Name(s):     Mohammed Ahmed
+ *                      Joshua Korovesi
+ *                      Tyler Acosta
+ *                      Justin Muere
+ *  Last Modified by:   Mohammed Juned Ahmed
+ *  Date Last Modified: April 19, 2017
+ *  Revision History:   1.0.0
+ *
+ *  @module managers
+ */
 var managers;
 (function (managers) {
     // Scoreboard class +++++++++++++++++++++++++++++++++++

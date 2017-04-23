@@ -14,12 +14,12 @@
  */
 module objects {
     // OCEAN CLASS ++++++++++++++++++++++++++++++++++++
-    export class Forest extends objects.GameObject {
+    export class Ocean extends objects.GameObject {
         // PRIVATE INSTANCE VARIABLES +++++++++++++++++
         
         // CONSTRUCTOR METHOD +++++++++++++++++++++++++
         constructor() {
-            super("forest");
+            super("ocean");
             
            this._speed.x = -5; //ocean speed
            this._reset(-960);

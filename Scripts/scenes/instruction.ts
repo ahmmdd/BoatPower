@@ -21,6 +21,7 @@ module scenes {
         private _instructions1: objects.Label;
         private _instructions2: objects.Label;
         private _instructions3: objects.Label;
+        private _instructions4: objects.Label;
         private _backButton: objects.Button;
 
         // CONSTRUCTOR ++++++++++++++++++++++
@@ -66,6 +67,12 @@ module scenes {
                 config.Screen.CENTER_X, config.Screen.CENTER_Y - 70, true);
             this.addChild(this._instructions3);
 
+            this._instructions4 = new objects.Label(
+                "Each Level has target score before \n\nits updated to next level.",
+                "25px Consolas",
+                "#14148a",
+                config.Screen.CENTER_X, config.Screen.CENTER_Y - 30, true);
+            this.addChild(this._instructions4);
             // add the Start button to the MENU scene
             this._backButton = new objects.Button(
                 "BackButton",

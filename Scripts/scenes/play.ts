@@ -16,7 +16,7 @@
 module scenes {
     export class Play extends objects.Scene {
         //PRIVATE INSTANCE VARIABLES ++++++++++++
-        private _forest: objects.Forest;
+        private _ocean: objects.Ocean;
         private _blackBox: objects.BlackBox;
         private _enemy: objects.Enemy1[];
         private _enemyCount: number;
@@ -24,6 +24,7 @@ module scenes {
         private _collision: managers.Collision;
         private _livesLabel: objects.Label;
         private _scoreLabel: objects.Label;
+        private _levelLabel:objects.Label;
 
         // CONSTRUCTOR ++++++++++++++++++++++
         constructor() {
@@ -32,6 +33,7 @@ module scenes {
         }
 
         private _updateScore(): void {
+            this._levelLabel.text = "LEVEL 1";
             this._livesLabel.text = "Lives: " + livesValue;
             this._scoreLabel.text = "Score: " + scoreValue;
         }
@@ -42,15 +44,15 @@ module scenes {
         public start(): void {
             // Set Cloud Count
             this._enemyCount = 3;
-            livesValue = 5;
+            livesValue = 10;
             scoreValue = 0;
 
             // Instantiate Cloud array
             this._enemy = new Array<objects.Enemy1>();
 
             // added ocean to the scene
-            this._forest = new objects.Forest();
-            this.addChild(this._forest);
+            this._ocean = new objects.Ocean();
+            this.addChild(this._ocean);
 
             // added island to the scene
             this._blackBox = new objects.BlackBox();
@@ -70,15 +72,23 @@ module scenes {
                 "lives: " + livesValue,
                 "40px Consolas",
                 "#ffff00",
-                10, 10, false
+                5, 10, false
             );
             this.addChild(this._livesLabel);
+
+            this._levelLabel = new objects.Label(
+                "Level 1",
+                "40px Consolas",
+                "#ffff00",
+                200, 10, false
+            );
+            this.addChild(this._levelLabel);
 
             this._scoreLabel = new objects.Label(
                 "Score: " + scoreValue,
                 "40px Consolas",
                 "#ffff00",
-                390, 10, false
+                380, 10, false
             );
             this.addChild(this._scoreLabel);
 
@@ -91,7 +101,7 @@ module scenes {
 
         // PLAY Scene updates here
         public update(): void {
-            this._forest.update();
+            this._ocean.update();
             this._blackBox.update();
 
             this._player.update();
@@ -104,10 +114,18 @@ module scenes {
             this._collision.check(this._blackBox);
             
             this._updateScore();
+
+            this.endState();
         }
 
 
         //EVENT HANDLERS ++++++++++++++++++++
-
+        public endState():void{
+            if(scoreValue >= 1000){
+                console.log("Change to Level 2");
+                scene = config.Scene.PLAY2;
+                changeScene();
+            }
+        }
     }
 }

@@ -1,3 +1,17 @@
+/**
+ *  The Scenes module is a namespace to reference all scene objects
+ *
+ * Source File Name:   game.ts
+ *  Author Name(s):     Mohammed Ahmed
+ *                      Joshua Korovesi
+ *                      Tyler Acosta
+ *                      Justin Muere
+ *  Last Modified by:   Mohammed Juned Ahmed
+ *  Date Last Modified: April 11, 2017
+ *  Revision History:   1.0.0
+ *
+ *  @module scenes
+ */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

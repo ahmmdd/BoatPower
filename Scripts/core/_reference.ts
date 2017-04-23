@@ -20,7 +20,7 @@
 /// <reference path="../objects/scene.ts" />
 
 /// <reference path="../objects/gameobject.ts" />
-/// <reference path="../objects/forest.ts" />
+/// <reference path="../objects/ocean.ts" />
 /// <reference path="../objects/blackBox.ts"/>
 /// <reference path="../objects/enemy1.ts"/>
 /// <reference path="../objects/player.ts" />

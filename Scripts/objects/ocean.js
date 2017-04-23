@@ -3,20 +3,34 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/**
+ *  The Forest module is a namespace to load all labels
+ *
+ *  Source File Name:   forest.ts
+ *  Author Name(s):     Mohammed Ahmed
+ *                      Joshua Korovesi
+ *                      Tyler Acosta
+ *                      Justin Muere
+ *  Last Modified by:   Mohammed Juned Ahmed
+ *  Date Last Modified: April 19, 2017
+ *  Revision History:   1.0.0
+ *
+ *  @module objects
+ */
 var objects;
 (function (objects) {
     // OCEAN CLASS ++++++++++++++++++++++++++++++++++++
-    var Forest = (function (_super) {
-        __extends(Forest, _super);
+    var Ocean = (function (_super) {
+        __extends(Ocean, _super);
         // PRIVATE INSTANCE VARIABLES +++++++++++++++++
         // CONSTRUCTOR METHOD +++++++++++++++++++++++++
-        function Forest() {
-            _super.call(this, "forest");
+        function Ocean() {
+            _super.call(this, "ocean");
             this._speed.x = -5; //ocean speed
             this._reset(-960);
         }
         // PRIVATE METHODS ++++++++++++++++++++++++++++
-        Forest.prototype._checkBounds = function (value) {
+        Ocean.prototype._checkBounds = function (value) {
             // check to see if the top of the ocean 
             // is met the top of the scene
             if (this.x >= value) {
@@ -24,18 +38,18 @@ var objects;
             }
         };
         // reset the ocean offscreen
-        Forest.prototype._reset = function (value) {
+        Ocean.prototype._reset = function (value) {
             this.x = value;
         };
         // PUBLIC METHODS ++++++++++++++++++++++++++++++
-        Forest.prototype.update = function () {
+        Ocean.prototype.update = function () {
             // scroll the ocean 5 px per frame
             this.x -= this._speed.x;
             this._checkBounds(0);
         };
-        return Forest;
+        return Ocean;
     }(objects.GameObject));
-    objects.Forest = Forest;
+    objects.Ocean = Ocean;
 })(objects || (objects = {}));
 
-//# sourceMappingURL=forest.js.map
+//# sourceMappingURL=ocean.js.map
