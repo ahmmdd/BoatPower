@@ -21,6 +21,8 @@ module config {
         public static INSTRUCTION: number = 1;
         public static PLAY: number = 2;
         public static END: number = 3;
+        public static PLAY2: number = 4;
+        public static PLAY3: number = 5;
 
     }
 

@@ -32,6 +32,8 @@ var highScoreValue: number = 0;
 var menu: scenes.Menu;
 var instruction: scenes.Instruction;
 var play: scenes.Play;
+var play2: scenes.Play2;
+var play3: scenes.Play3;
 var end: scenes.End;
 
 var assetData: objects.Asset[] = [
@@ -118,11 +120,11 @@ function changeScene(): void {
             currentScene = menu;
             console.log("Starting MENU Scene");
             break;
-            case config.Scene.INSTRUCTION:
-            // show the MENU scene
+        case config.Scene.INSTRUCTION:
+            // show the Intructions scene
             stage.removeAllChildren();
             instruction = new scenes.Instruction();
-            currentScene = menu;
+            currentScene = instruction;
             console.log("Starting Instruction Scene");
             break;
         case config.Scene.PLAY:
@@ -138,6 +140,20 @@ function changeScene(): void {
             end = new scenes.End();
             currentScene = end;
             console.log("Starting END Scene");
+            break;
+        case config.Scene.PLAY2:
+            // show the play level 2 scene
+            stage.removeAllChildren();
+            play2 = new scenes.PLay2();
+            currentScene = play2;
+            console.log("Starting PLAY2 Scene");
+            break;
+        case config.Scene.PLAY3:
+            // show the play level 3 scene
+            stage.removeAllChildren();
+            end = new scenes.Play3();
+            currentScene = play3;
+            console.log("Starting PLAY3 Scene");
             break;
     }
 
